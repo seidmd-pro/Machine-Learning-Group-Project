@@ -18,7 +18,7 @@ from sklearn.metrics import (
     confusion_matrix, classification_report, ConfusionMatrixDisplay
 )
 
-
+# ============================================================
 # PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
 
 
@@ -92,3 +92,17 @@ sns.heatmap(df[feature_cols + ["Failure_Risk"]].corr(), annot=True, cmap="coolwa
 plt.title("Correlation matrix of engineering variables")
 plt.tight_layout()
 plt.show()
+
+
+# ============================================================
+# PART 2. TRAIN-TEST SPLIT
+# ============================================================
+
+# Stratification preserves the class ratio in both subsets.
+# With only 30 records, test metrics are sensitive to individual records.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.30, random_state=42, stratify=y
+)
+
+print(f"\nTraining records: {len(X_train)}")
+print(f"Testing records:  {len(X_test)}")
