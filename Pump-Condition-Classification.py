@@ -91,3 +91,42 @@ plt.ylabel("Pressure (psi)")
 plt.legend(title="0=Normal, 1=Warning, 2=Fault")
 plt.tight_layout()
 plt.show()
+
+# ============================================================
+# PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
+# ============================================================
+# Potential algorithms from case study[cite: 5]
+
+svm_model = Pipeline([
+    ("scaler", StandardScaler()),
+    ("classifier", SVC(kernel="rbf", C=1.0, gamma="scale"))
+])
+
+naive_bayes_model = Pipeline([
+    ("scaler", StandardScaler()),
+    ("classifier", GaussianNB())
+])
+
+decision_tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+
+random_forest_model = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+
+adaboost_model = AdaBoostClassifier(
+    estimator=DecisionTreeClassifier(max_depth=2, random_state=42),
+    n_estimators=50,
+    learning_rate=0.5,
+    random_state=42
+)
+
+models = {
+    "SVM": svm_model,
+    "Naïve Bayes": naive_bayes_model,
+    "Decision Tree": decision_tree_model,
+    "Random Forest": random_forest_model,
+    "AdaBoost": adaboost_model
+}
+
+# Keep the class balance in both subsets using stratify
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
