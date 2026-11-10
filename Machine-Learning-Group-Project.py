@@ -22,7 +22,7 @@ from sklearn.metrics import (
 )
 
 # ============================================================
-# PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
+# PART 1. CREATE DATASET (30 RECORDS WITH SUBTLE FAILURES)
 # ============================================================
 
 data = [
