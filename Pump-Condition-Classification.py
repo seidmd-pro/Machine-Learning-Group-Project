@@ -226,3 +226,20 @@ print("\n" + "*"*65)
 print("OPERATIONAL CAUTION:")
 print("Predictions should support—not replace—engineering inspection and safety procedures[cite: 5].")
 print("*"*65)
+new_observation = pd.DataFrame([{
+    "Vibration_mm_s": 5.5,
+    "Speed_RPM": 1380,
+    "Temperature_C": 80,
+    "Pressure_psi": 95,
+    "Operating_Hours": 4500
+}])
+
+print("\nNEW PUMP OBSERVATION")
+print(new_observation)
+
+for name, model in models.items():
+    predicted_class = int(model.predict(new_observation)[0])
+    label = target_names[predicted_class]
+    print(f"{name:15s} prediction: {label}")
+
+print("\nEND OF PRACTICAL CASE STUDY")
