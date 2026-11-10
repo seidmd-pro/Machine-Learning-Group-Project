@@ -316,3 +316,12 @@ new_observation = pd.DataFrame([{
     "Pressure_psi": 95,
     "Operating_Hours": 4500
 }])
+print("\nNEW PUMP OBSERVATION")
+print(new_observation)
+
+for name, model in models.items():
+    predicted_class = int(model.predict(new_observation)[0])
+    label = target_names[predicted_class]
+    print(f"{name:15s} prediction: {label}")
+
+print("\nEND OF PRACTICAL CASE STUDY")
