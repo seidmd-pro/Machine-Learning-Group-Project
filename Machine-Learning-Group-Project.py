@@ -1,5 +1,5 @@
 
-#Import ML classification pipeline and evaluation metrics
+ #Import ML classification pipeline and evaluation metrics
 # ============================================================
 import numpy as np
 import pandas as pd
@@ -20,14 +20,14 @@ from sklearn.metrics import (
 
 # ============================================================
 # PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
-
+# ============================================================
 
 data = [
     # ID, Temperature_C, Vibration_mm_s, Speed_RPM, Operating_Hours, Failure_Risk
     [1,  55, 2.1, 1480, 1500, 0],
     [2,  62, 2.8, 1475, 2100, 0],
     [3,  58, 2.4, 1460, 1800, 0],
-    [4,  72, 3.8, 1420, 3600, 0], 
+    [4,  72, 3.8, 1420, 3600, 0],
     [5,  68, 3.2, 1440, 2900, 0],
     [6,  59, 2.5, 1455, 1950, 0],
     [7,  65, 3.0, 1450, 2600, 0],
@@ -55,7 +55,6 @@ data = [
     [29, 80, 5.4, 1360, 4800, 1],
     [30, 94, 6.9, 1305, 6300, 1],
 ]
-
 
 columns = [
     "Machine_ID", "Temperature_C", "Vibration_mm_s",
@@ -211,7 +210,7 @@ plt.xticks(rotation=20)
 plt.legend(loc="lower right")
 plt.tight_layout()
 plt.show()
-=======
+
 
 # ============================================================
 # PART 6. INTERPRET TREE-BASED FEATURE IMPORTANCE
@@ -251,3 +250,25 @@ plt.title("Decision Tree learned from the training records")
 plt.tight_layout()
 plt.show()
 
+
+# ============================================================
+# PART 7. TEST A NEW ENGINEERING OBSERVATION
+# ============================================================
+
+# This new observation sits right on the overlapping boundary
+new_machine = pd.DataFrame([{
+    "Temperature_C": 73,
+    "Vibration_mm_s": 4.1,
+    "Speed_RPM": 1415,
+    "Operating_Hours": 3850
+}])
+
+print("\nNEW MACHINE OBSERVATION (BOUNDARY CASE)")
+print(new_machine)
+
+for name, model in models.items():
+    predicted_class = int(model.predict(new_machine)[0])
+    label = "Failure risk" if predicted_class == 1 else "Normal"
+    print(f"{name:15s} prediction: {label}")
+
+print("\nEND OF PRACTICAL CASE STUDY")
