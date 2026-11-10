@@ -249,3 +249,24 @@ plot_tree(
 plt.title("Decision Tree learned from the training records")
 plt.tight_layout()
 plt.show()
+
+# PART 7. TEST A NEW ENGINEERING OBSERVATION
+# ============================================================
+
+# This new observation sits right on the overlapping boundary
+new_machine = pd.DataFrame([{
+    "Temperature_C": 73,
+    "Vibration_mm_s": 4.1,
+    "Speed_RPM": 1415,
+    "Operating_Hours": 3850
+}])
+
+print("\nNEW MACHINE OBSERVATION (BOUNDARY CASE)")
+print(new_machine)
+
+for name, model in models.items():
+    predicted_class = int(model.predict(new_machine)[0])
+    label = "Failure risk" if predicted_class == 1 else "Normal"
+    print(f"{name:15s} prediction: {label}")
+
+print("\nEND OF PRACTICAL CASE STUDY")
