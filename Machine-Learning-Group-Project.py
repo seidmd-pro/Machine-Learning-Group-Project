@@ -58,3 +58,15 @@ data = [
     [29, 80, 5.4, 1360, 4800, 1],
     [30, 94, 6.9, 1305, 6300, 1],
 ]
+
+
+columns = [
+    "Machine_ID", "Temperature_C", "Vibration_mm_s",
+    "Speed_RPM", "Operating_Hours", "Failure_Risk"
+]
+df = pd.DataFrame(data, columns=columns)
+
+print("\nDATASET: 30 MACHINE RECORDS (HIGH OVERLAP)")
+print(df.to_string(index=False))
+print("\nClass distribution:")
+print(df["Failure_Risk"].value_counts().rename(index={0: "Normal", 1: "Failure risk"}))
