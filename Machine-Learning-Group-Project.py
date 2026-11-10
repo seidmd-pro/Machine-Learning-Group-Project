@@ -67,3 +67,28 @@ print("\nDATASET: 30 MACHINE RECORDS (HIGH OVERLAP)")
 print(df.to_string(index=False))
 print("\nClass distribution:")
 print(df["Failure_Risk"].value_counts().rename(index={0: "Normal", 1: "Failure risk"}))
+
+# Separate predictors (X) and target (y).
+feature_cols = ["Temperature_C", "Vibration_mm_s", "Speed_RPM", "Operating_Hours"]
+X = df[feature_cols]
+y = df["Failure_Risk"]
+
+# Initial data visualization.
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(8, 5))
+sns.scatterplot(
+    data=df, x="Temperature_C", y="Vibration_mm_s",
+    hue="Failure_Risk", style="Failure_Risk", s=100
+)
+plt.title("Machine temperature vs. vibration (High Overlap)")
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Vibration (mm/s)")
+plt.legend(title="0 = Normal, 1 = Failure risk")
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(8, 5))
+sns.heatmap(df[feature_cols + ["Failure_Risk"]].corr(), annot=True, cmap="coolwarm", fmt=".2f")
+plt.title("Correlation matrix of engineering variables")
+plt.tight_layout()
+plt.show()
