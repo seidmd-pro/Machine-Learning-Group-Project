@@ -304,3 +304,10 @@ print("\n" + "*"*65)
 print("OPERATIONAL CAUTION:")
 print("Predictions should support—not replace—engineering inspection and safety procedures[cite: 5].")
 print("*"*65)
+new_observation = pd.DataFrame([{
+    "Vibration_mm_s": 5.5,
+    "Speed_RPM": 1380,
+    "Temperature_C": 80,
+    "Pressure_psi": 95,
+    "Operating_Hours": 4500
+}])
