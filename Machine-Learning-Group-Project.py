@@ -1,5 +1,5 @@
 
-#Import ML classification pipeline and evaluation metrics
+ #Import ML classification pipeline and evaluation metrics
 # ============================================================
 import numpy as np
 import pandas as pd
@@ -18,16 +18,16 @@ from sklearn.metrics import (
     confusion_matrix, classification_report, ConfusionMatrixDisplay
 )
 
-
+# ============================================================
 # PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
-#============================================================
+# ============================================================
 
 data = [
     # ID, Temperature_C, Vibration_mm_s, Speed_RPM, Operating_Hours, Failure_Risk
     [1,  55, 2.1, 1480, 1500, 0],
     [2,  62, 2.8, 1475, 2100, 0],
     [3,  58, 2.4, 1460, 1800, 0],
-    [4,  72, 3.8, 1420, 3600, 0], 
+    [4,  72, 3.8, 1420, 3600, 0],
     [5,  68, 3.2, 1440, 2900, 0],
     [6,  59, 2.5, 1455, 1950, 0],
     [7,  65, 3.0, 1450, 2600, 0],
@@ -56,7 +56,6 @@ data = [
     [30, 94, 6.9, 1305, 6300, 1],
 ]
 
-
 columns = [
     "Machine_ID", "Temperature_C", "Vibration_mm_s",
     "Speed_RPM", "Operating_Hours", "Failure_Risk"
@@ -74,7 +73,7 @@ feature_cols = ["Temperature_C", "Vibration_mm_s", "Speed_RPM", "Operating_Hours
 X = df[feature_cols]
 y = df["Failure_Risk"]
 
-# Initial data visualization
+#  part 3 Initial data visualization
 
 sns.set_theme(style="whitegrid")
 plt.figure(figsize=(8, 5))
@@ -212,6 +211,7 @@ plt.legend(loc="lower right")
 plt.tight_layout()
 plt.show()
 
+
 # ============================================================
 # PART 6. INTERPRET TREE-BASED FEATURE IMPORTANCE
 # ============================================================
@@ -250,6 +250,8 @@ plt.title("Decision Tree learned from the training records")
 plt.tight_layout()
 plt.show()
 
+
+# ============================================================
 # PART 7. TEST A NEW ENGINEERING OBSERVATION
 # ============================================================
 
