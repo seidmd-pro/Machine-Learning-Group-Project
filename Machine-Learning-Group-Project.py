@@ -206,3 +206,21 @@ for model_name, model in models.items():
     ax.set_title(f"{model_name}: Confusion Matrix")
     plt.tight_layout()
     plt.show()
+
+
+    # ============================================================
+# PART 5. COMPARE THE FIVE ALGORITHMS
+# ============================================================
+
+results_df = pd.DataFrame(results).set_index("Algorithm")
+print("\nMODEL COMPARISON")
+print(results_df.round(3))
+
+results_df.plot(kind="bar", figsize=(11, 6), ylim=(0, 1.05))
+plt.title("Comparison of supervised algorithms (High Overlap Data)")
+plt.ylabel("Score")
+plt.xlabel("Algorithm")
+plt.xticks(rotation=20)
+plt.legend(loc="lower right")
+plt.tight_layout()
+plt.show()
