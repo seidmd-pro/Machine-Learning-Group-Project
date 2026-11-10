@@ -272,3 +272,12 @@ for name, model in models.items():
     print(f"{name:15s} prediction: {label}")
 
 print("\nEND OF PRACTICAL CASE STUDY")
+
+# ============================================================
+# PART 6. INTERPRET TREE-BASED FEATURE IMPORTANCE
+# ============================================================
+
+tree_models = {
+    "Decision Tree": decision_tree_model,
+    "Random Forest": random_forest_model
+}
