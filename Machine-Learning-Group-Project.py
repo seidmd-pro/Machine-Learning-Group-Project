@@ -19,7 +19,7 @@ from sklearn.metrics import (
 )
 
 # ============================================================
-# PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
+# PART 1. CREATE DATASET 
 
 
 data = [
@@ -69,11 +69,13 @@ print("\nClass distribution:")
 print(df["Failure_Risk"].value_counts().rename(index={0: "Normal", 1: "Failure risk"}))
 
 # Separate predictors (X) and target (y).
+
 feature_cols = ["Temperature_C", "Vibration_mm_s", "Speed_RPM", "Operating_Hours"]
 X = df[feature_cols]
 y = df["Failure_Risk"]
 
-# Initial data visualization.
+# Initial data visualization
+
 sns.set_theme(style="whitegrid")
 plt.figure(figsize=(8, 5))
 sns.scatterplot(
@@ -94,12 +96,10 @@ plt.tight_layout()
 plt.show()
 
 
-# ============================================================
-# PART 2. TRAIN-TEST SPLIT
-# ============================================================
 
-# Stratification preserves the class ratio in both subsets.
-# With only 30 records, test metrics are sensitive to individual records.
+# PART 2. TRAIN-TEST SPLIT
+
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.30, random_state=42, stratify=y
 )
@@ -107,33 +107,31 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"\nTraining records: {len(X_train)}")
 print(f"Testing records:  {len(X_test)}")
 
-# ============================================================
-# PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
-# ============================================================
 
-# SVM: scaling is important because SVM uses distances/margins.
+# PART 3. Add FIVE INDEPENDENT CLASSIFIERS
+
 svm_model = Pipeline([
     ("scaler", StandardScaler()),
     ("classifier", SVC(kernel="rbf", C=1.0, gamma="scale"))
 ])
 
-# Gaussian Naive Bayes: assumes features are conditionally Gaussian
-# and conditionally independent given the class.
+#  Add Gaussian Naive Bayes
 naive_bayes_model = Pipeline([
     ("scaler", StandardScaler()),
     ("classifier", GaussianNB())
 ])
 
-# Decision Tree: learns a sequence of feature-based splitting rules.
+# Decision Tree:to learn simple decision rules inferred from the data features
+
 decision_tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
 
-# Random Forest: combines many decision trees trained on bootstrap samples.
+# Random Forest: to combine multiple decision trees to improve predictive performance and reduce overfitting.
 random_forest_model = RandomForestClassifier(
     n_estimators=100, max_depth=3, random_state=42
 )
 
-# AdaBoost: sequentially trains weak learners, emphasizing previously
-# misclassified training examples.
+# AdaBoost: to sequentially train weak classifiers, focusing on misclassified training examples 
+#1, misclassified training examples.
 adaboost_model = AdaBoostClassifier(
     estimator=DecisionTreeClassifier(max_depth=1, random_state=42),
     n_estimators=50,
