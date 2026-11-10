@@ -18,7 +18,7 @@ from sklearn.metrics import (
     confusion_matrix, classification_report, ConfusionMatrixDisplay
 )
 
-# ============================================================
+
 # PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
 #============================================================
 
@@ -69,11 +69,13 @@ print("\nClass distribution:")
 print(df["Failure_Risk"].value_counts().rename(index={0: "Normal", 1: "Failure risk"}))
 
 # Separate predictors (X) and target (y).
+
 feature_cols = ["Temperature_C", "Vibration_mm_s", "Speed_RPM", "Operating_Hours"]
 X = df[feature_cols]
 y = df["Failure_Risk"]
 
-# Initial data visualization.
+# Initial data visualization
+
 sns.set_theme(style="whitegrid")
 plt.figure(figsize=(8, 5))
 sns.scatterplot(
