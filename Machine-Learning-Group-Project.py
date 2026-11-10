@@ -95,20 +95,6 @@ plt.title("Correlation matrix of engineering variables")
 plt.tight_layout()
 plt.show()
 
-
-# ============================================================
-# PART 2. TRAIN-TEST SPLIT
-# ============================================================
-
-# Stratification preserves the class ratio in both subsets.
-# With only 30 records, test metrics are sensitive to individual records.
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.30, random_state=42, stratify=y
-)
-
-print(f"\nTraining records: {len(X_train)}")
-print(f"Testing records:  {len(X_test)}")
-
 # ============================================================
 # PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
 # ============================================================
@@ -119,23 +105,23 @@ svm_model = Pipeline([
     ("classifier", SVC(kernel="rbf", C=1.0, gamma="scale"))
 ])
 
-# Gaussian Naive Bayes: assumes features are conditionally Gaussian
-# and conditionally independent given the class.
+# Gaussian Naive Bayes
 naive_bayes_model = Pipeline([
     ("scaler", StandardScaler()),
     ("classifier", GaussianNB())
 ])
 
-# Decision Tree: learns a sequence of feature-based splitting rules.
-decision_tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+# Decision Tree
+decision_tree_model = DecisionTreeClassifier(
+    max_depth=3, random_state=42
+)
 
-# Random Forest: combines many decision trees trained on bootstrap samples.
+# Random Forest
 random_forest_model = RandomForestClassifier(
     n_estimators=100, max_depth=3, random_state=42
 )
 
-# AdaBoost: sequentially trains weak learners, emphasizing previously
-# misclassified training examples.
+# AdaBoost
 adaboost_model = AdaBoostClassifier(
     estimator=DecisionTreeClassifier(max_depth=1, random_state=42),
     n_estimators=50,
@@ -209,8 +195,7 @@ for model_name, model in models.items():
     plt.tight_layout()
     plt.show()
 
-
-    # ============================================================
+# ============================================================
 # PART 5. COMPARE THE FIVE ALGORITHMS
 # ============================================================
 
@@ -224,5 +209,43 @@ plt.ylabel("Score")
 plt.xlabel("Algorithm")
 plt.xticks(rotation=20)
 plt.legend(loc="lower right")
+plt.tight_layout()
+plt.show()
+
+# ============================================================
+# PART 6. INTERPRET TREE-BASED FEATURE IMPORTANCE
+# ============================================================
+
+tree_models = {
+    "Decision Tree": decision_tree_model,
+    "Random Forest": random_forest_model
+}
+
+for name, model in tree_models.items():
+    importance = pd.Series(
+        model.feature_importances_, index=feature_cols
+    ).sort_values(ascending=False)
+
+    print(f"\n{name} feature importance:")
+    print(importance.round(3))
+
+    plt.figure(figsize=(7, 4))
+    plt.barh(importance.index, importance.values)
+    plt.title(f"{name}: Feature Importance")
+    plt.xlabel("Importance")
+    plt.ylabel("Engineering feature")
+    plt.tight_layout()
+    plt.show()
+    # Visualize the learned Decision Tree.
+plt.figure(figsize=(16, 8))
+plot_tree(
+    decision_tree_model,
+    feature_names=feature_cols,
+    class_names=["Normal", "Failure risk"],
+    filled=True,
+    rounded=True,
+    fontsize=9
+)
+plt.title("Decision Tree learned from the training records")
 plt.tight_layout()
 plt.show()
