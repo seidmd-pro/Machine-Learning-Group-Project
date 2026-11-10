@@ -148,3 +148,61 @@ models = {
     "Random Forest": random_forest_model,
     "AdaBoost": adaboost_model
 }
+
+# ============================================================
+# PART 4. TRAIN, PREDICT, EVALUATE, AND VISUALIZE EACH MODEL
+# ============================================================
+
+results = []
+predictions = {}
+
+for model_name, model in models.items():
+    print("\n" + "=" * 65)
+    print(f"{model_name.upper()}")
+    print("=" * 65)
+
+    # Learn from the training records.
+    model.fit(X_train, y_train)
+
+    # Predict labels for unseen test records.
+    y_pred = model.predict(X_test)
+    predictions[model_name] = y_pred
+
+    # Calculate evaluation metrics.
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, zero_division=0)
+    recall = recall_score(y_test, y_pred, zero_division=0)
+    f1 = f1_score(y_test, y_pred, zero_division=0)
+
+    results.append({
+        "Algorithm": model_name,
+        "Accuracy": accuracy,
+        "Precision": precision,
+        "Recall": recall,
+        "F1-score": f1
+    })
+
+    print(f"Accuracy : {accuracy:.3f}")
+    print(f"Precision: {precision:.3f}")
+    print(f"Recall   : {recall:.3f}")
+    print(f"F1-score : {f1:.3f}")
+    print("\nClassification report:")
+    print(classification_report(
+        y_test, y_pred,
+        labels=[0, 1],
+        target_names=["Normal", "Failure risk"],
+        zero_division=0
+    ))
+
+    # Confusion matrix visualization for this algorithm.
+    fig, ax = plt.subplots(figsize=(5, 4))
+    ConfusionMatrixDisplay.from_predictions(
+        y_test, y_pred,
+        display_labels=["Normal", "Failure risk"],
+        cmap="Blues",
+        colorbar=False,
+        ax=ax
+    )
+    ax.set_title(f"{model_name}: Confusion Matrix")
+    plt.tight_layout()
+    plt.show()
