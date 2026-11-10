@@ -20,7 +20,7 @@ from sklearn.metrics import (
 
 
 # PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
-
+#============================================================
 
 data = [
     # ID, Temperature_C, Vibration_mm_s, Speed_RPM, Operating_Hours, Failure_Risk
