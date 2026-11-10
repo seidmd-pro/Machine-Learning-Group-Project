@@ -219,3 +219,10 @@ for name, model in tree_models.items():
     plt.ylabel("Pump Feature")
     plt.tight_layout()
     plt.show()
+    # ============================================================
+# PART 7. TEST A NEW ENGINEERING OBSERVATION
+# ============================================================
+print("\n" + "*"*65)
+print("OPERATIONAL CAUTION:")
+print("Predictions should support—not replace—engineering inspection and safety procedures[cite: 5].")
+print("*"*65)
