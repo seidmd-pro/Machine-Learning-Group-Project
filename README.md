@@ -32,3 +32,13 @@ AdaBoost
 Technologies
 
 Python, NumPy, Pandas, Matplotlib, Seaborn, and Scikit-learn.
+
+   Evaluation and Analysis
+
+Accuracy, Precision, Recall, F1-score, Confusion Matrices, Classification Reports, Feature Importance, and Model Comparison.
+
+      Objective
+
+To demonstrate how machine learning can support industrial condition monitoring, early failure detection, and predictive maintenance.
+
+Note: Predictions support engineering decisions and do not replace professional inspection or safety procedures.
