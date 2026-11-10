@@ -106,3 +106,45 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f"\nTraining records: {len(X_train)}")
 print(f"Testing records:  {len(X_test)}")
+
+# ============================================================
+# PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
+# ============================================================
+
+# SVM: scaling is important because SVM uses distances/margins.
+svm_model = Pipeline([
+    ("scaler", StandardScaler()),
+    ("classifier", SVC(kernel="rbf", C=1.0, gamma="scale"))
+])
+
+# Gaussian Naive Bayes: assumes features are conditionally Gaussian
+# and conditionally independent given the class.
+naive_bayes_model = Pipeline([
+    ("scaler", StandardScaler()),
+    ("classifier", GaussianNB())
+])
+
+# Decision Tree: learns a sequence of feature-based splitting rules.
+decision_tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+
+# Random Forest: combines many decision trees trained on bootstrap samples.
+random_forest_model = RandomForestClassifier(
+    n_estimators=100, max_depth=3, random_state=42
+)
+
+# AdaBoost: sequentially trains weak learners, emphasizing previously
+# misclassified training examples.
+adaboost_model = AdaBoostClassifier(
+    estimator=DecisionTreeClassifier(max_depth=1, random_state=42),
+    n_estimators=50,
+    learning_rate=0.5,
+    random_state=42
+)
+
+models = {
+    "SVM": svm_model,
+    "Naive Bayes": naive_bayes_model,
+    "Decision Tree": decision_tree_model,
+    "Random Forest": random_forest_model,
+    "AdaBoost": adaboost_model
+}
