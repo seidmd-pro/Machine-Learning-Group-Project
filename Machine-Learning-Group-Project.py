@@ -136,6 +136,11 @@ models = {
     "AdaBoost": adaboost_model
 }
 
+# Keep the class balance in both subsets and make the evaluation reproducible.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
 # ============================================================
 # PART 4. TRAIN, PREDICT, EVALUATE, AND VISUALIZE EACH MODEL
 # ============================================================
