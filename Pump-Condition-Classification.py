@@ -196,3 +196,11 @@ plt.xticks(rotation=20)
 plt.legend(loc="lower right")
 plt.tight_layout()
 plt.show()
+# ============================================================
+# PART 6. INTERPRET TREE-BASED FEATURE IMPORTANCE
+# ============================================================
+
+tree_models = {
+    "Decision Tree": decision_tree_model,
+    "Random Forest": random_forest_model
+}
