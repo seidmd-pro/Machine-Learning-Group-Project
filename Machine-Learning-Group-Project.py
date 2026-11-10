@@ -286,3 +286,18 @@ tree_models = {
     "Decision Tree": decision_tree_model,
     "Random Forest": random_forest_model
 }
+for name, model in tree_models.items():
+    importance = pd.Series(
+        model.feature_importances_, index=feature_cols
+    ).sort_values(ascending=False)
+
+    print(f"\n{name} feature importance:")
+    print(importance.round(3))
+
+    plt.figure(figsize=(7, 4))
+    plt.barh(importance.index, importance.values)
+    plt.title(f"{name}: Feature Importance")
+    plt.xlabel("Importance")
+    plt.ylabel("Pump Feature")
+    plt.tight_layout()
+    plt.show()
