@@ -130,3 +130,57 @@ models = {
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42, stratify=y
 )
+
+# PART 4. TRAIN, PREDICT, EVALUATE, AND VISUALIZE EACH MODEL
+# ============================================================
+# Evaluation priority: Recall for Fault, precision for Fault, macro F1, confusion matrix[cite: 5].
+
+results = []
+predictions = {}
+
+for model_name, model in models.items():
+    print("\n" + "=" * 65)
+    print(f"{model_name.upper()}")
+    print("=" * 65)
+
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    predictions[model_name] = y_pred
+
+    # Calculate overall and Fault-specific evaluation metrics[cite: 5].
+    # '2' is the label for Fault.
+    macro_f1 = f1_score(y_test, y_pred, average='macro', zero_division=0)
+    fault_precision = precision_score(y_test, y_pred, labels=[2], average=None, zero_division=0)[0]
+    fault_recall = recall_score(y_test, y_pred, labels=[2], average=None, zero_division=0)[0]
+
+    results.append({
+        "Algorithm": model_name,
+        "Macro F1": macro_f1,
+        "Fault Precision": fault_precision,
+        "Fault Recall": fault_recall
+    })
+
+    print(f"Priority Metrics:")
+    print(f"Macro F1-score      : {macro_f1:.3f}")
+    print(f"Precision for Fault : {fault_precision:.3f}")
+    print(f"Recall for Fault    : {fault_recall:.3f}")
+    
+    print("\nClassification report:")
+    print(classification_report(
+        y_test, y_pred,
+        target_names=target_names,
+        zero_division=0
+    ))
+
+    # Confusion matrix visualization[cite: 5]
+    fig, ax = plt.subplots(figsize=(5, 4))
+    ConfusionMatrixDisplay.from_predictions(
+        y_test, y_pred,
+        display_labels=target_names,
+        cmap="Blues",
+        colorbar=False,
+        ax=ax
+    )
+    ax.set_title(f"{model_name}: Confusion Matrix")
+    plt.tight_layout()
+    plt.show()
