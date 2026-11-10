@@ -7,12 +7,28 @@
 
 Intelligent Machine Condition Monitoring and Failure Prediction Using Machine Learning
 
-Project Overview
+    Project Overview
 
 A Python-based machine learning project that analyzes industrial engineering data to classify pump conditions and predict machine failure risks using supervised learning algorithms.
 
-Practical Case Studies
+   Practical Case Studies
 
 Pump Condition Classification: Normal, Warning, and Fault (30 records).
 
 Machine Failure Prediction: Normal and Failure Risk (30 records).
+
+    Machine Learning Algorithms
+
+Support Vector Machine (SVM)
+
+Gaussian Naive Bayes
+
+Decision Tree
+
+Random Forest
+
+AdaBoost
+
+Technologies
+
+Python, NumPy, Pandas, Matplotlib, Seaborn, and Scikit-learn.
