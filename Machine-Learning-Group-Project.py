@@ -1,5 +1,5 @@
 
- #Import ML classification pipeline and evaluation metrics
+#Import ML classification pipeline and evaluation metrics
 # ============================================================
 import numpy as np
 import pandas as pd
@@ -19,7 +19,7 @@ from sklearn.metrics import (
 )
 
 # ============================================================
-# PART 1. CREATE DATASET 
+# PART 1. CREATE DATASET (30 RECORDS - HIGH OVERLAP)
 
 
 data = [
@@ -96,10 +96,12 @@ plt.tight_layout()
 plt.show()
 
 
-
+# ============================================================
 # PART 2. TRAIN-TEST SPLIT
+# ============================================================
 
-
+# Stratification preserves the class ratio in both subsets.
+# With only 30 records, test metrics are sensitive to individual records.
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.30, random_state=42, stratify=y
 )
@@ -107,31 +109,33 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"\nTraining records: {len(X_train)}")
 print(f"Testing records:  {len(X_test)}")
 
+# ============================================================
+# PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
+# ============================================================
 
-# PART 3. Add FIVE INDEPENDENT CLASSIFIERS
-
+# SVM: scaling is important because SVM uses distances/margins.
 svm_model = Pipeline([
     ("scaler", StandardScaler()),
     ("classifier", SVC(kernel="rbf", C=1.0, gamma="scale"))
 ])
 
-#  Add Gaussian Naive Bayes
+# Gaussian Naive Bayes: assumes features are conditionally Gaussian
+# and conditionally independent given the class.
 naive_bayes_model = Pipeline([
     ("scaler", StandardScaler()),
     ("classifier", GaussianNB())
 ])
 
-# Decision Tree:to learn simple decision rules inferred from the data features
-
+# Decision Tree: learns a sequence of feature-based splitting rules.
 decision_tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
 
-# Random Forest: to combine multiple decision trees to improve predictive performance and reduce overfitting.
+# Random Forest: combines many decision trees trained on bootstrap samples.
 random_forest_model = RandomForestClassifier(
     n_estimators=100, max_depth=3, random_state=42
 )
 
-# AdaBoost: to sequentially train weak classifiers, focusing on misclassified training examples 
-#1, misclassified training examples.
+# AdaBoost: sequentially trains weak learners, emphasizing previously
+# misclassified training examples.
 adaboost_model = AdaBoostClassifier(
     estimator=DecisionTreeClassifier(max_depth=1, random_state=42),
     n_estimators=50,
