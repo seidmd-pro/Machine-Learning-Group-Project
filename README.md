@@ -1,4 +1,4 @@
-# Machine-Learning-Group-Project
+# Machine Learning Group Project
 
 # No.    Name                            Id
 1.
