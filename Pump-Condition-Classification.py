@@ -17,11 +17,8 @@ from sklearn.metrics import (
     classification_report, ConfusionMatrixDisplay
 )
 
-# ============================================================
 # PART 1. CREATE DATASET (30 PUMP RECORDS - 3 CLASSES)
-# ============================================================
 # Input features: Vibration (mm/s), RPM, temperature (°C), pressure, operating hours[cite: 5].
-# Target label: 0 = Normal, 1 = Warning, 2 = Fault[cite: 5].
 
 data = [
     # Normal Pumps (0)
@@ -92,7 +89,6 @@ plt.legend(title="0=Normal, 1=Warning, 2=Fault")
 plt.tight_layout()
 plt.show()
 
-# ============================================================
 # PART 3. DEFINE FIVE INDEPENDENT CLASSIFIERS
 # ============================================================
 # Potential algorithms from case study[cite: 5]
@@ -132,7 +128,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # PART 4. TRAIN, PREDICT, EVALUATE, AND VISUALIZE EACH MODEL
-# ============================================================
 # Evaluation priority: Recall for Fault, precision for Fault, macro F1, confusion matrix[cite: 5].
 
 results = []
@@ -186,7 +181,6 @@ for model_name, model in models.items():
     plt.show()
 
 
-# ============================================================
 # PART 5. COMPARE THE FIVE ALGORITHMS
 # ============================================================
 
